@@ -1,10 +1,10 @@
-package ru.gb.jt.chat.server.core;
+package ru.abondarenko.chat.server.core;
 
-import ru.gb.jt.chat.common.Library;
-import ru.gb.jt.network.ServerSocketThread;
-import ru.gb.jt.network.ServerSocketThreadListener;
-import ru.gb.jt.network.SocketThread;
-import ru.gb.jt.network.SocketThreadListener;
+import ru.abondarenko.chat.common.Library;
+import ru.abondarenko.network.ServerSocketThread;
+import ru.abondarenko.network.ServerSocketThreadListener;
+import ru.abondarenko.network.SocketThread;
+import ru.abondarenko.network.SocketThreadListener;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -46,11 +46,6 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
         listener.onChatServerMessage(msg);
     }
 
-    /**
-     * Server methods
-     *
-     * */
-
     @Override
     public void onServerStart(ServerSocketThread thread) {
         putLog("Server thread started");
@@ -74,10 +69,7 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
     }
 
     @Override
-    public void onServerTimeout(ServerSocketThread thread, ServerSocket server) {
-//        putLog("Server timeout");
-
-    }
+    public void onServerTimeout(ServerSocketThread thread, ServerSocket server) {}
 
     @Override
     public void onSocketAccepted(ServerSocketThread thread, ServerSocket server, Socket socket) {
@@ -91,11 +83,6 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
     public void onServerException(ServerSocketThread thread, Throwable exception) {
         exception.printStackTrace();
     }
-
-    /**
-     * Socket methods
-     *
-     * */
 
     @Override
     public synchronized void onSocketStart(SocketThread thread, Socket socket) {
@@ -168,10 +155,10 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
                 client.sendMessage(Library.getMsgFormatError(msg));
         }
     }
-// launch4j
+
     private void sendToAuthClients(String msg) {
-        for (int i = 0; i < clients.size(); i++) {
-            ClientThread client = (ClientThread) clients.get(i);
+        for (SocketThread socketThread : clients) {
+            ClientThread client = (ClientThread) socketThread;
             if (!client.isAuthorized()) continue;
             client.sendMessage(msg);
         }
@@ -184,8 +171,8 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
 
     private String getUsers() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < clients.size(); i++) {
-            ClientThread client = (ClientThread) clients.get(i);
+        for (SocketThread socketThread : clients) {
+            ClientThread client = (ClientThread) socketThread;
             if (!client.isAuthorized()) continue;
             sb.append(client.getNickname()).append(Library.DELIMITER);
         }
@@ -193,8 +180,8 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
     }
 
     private synchronized ClientThread findClientByNickname(String nickname) {
-        for (int i = 0; i < clients.size(); i++) {
-            ClientThread client = (ClientThread) clients.get(i);
+        for (SocketThread socketThread : clients) {
+            ClientThread client = (ClientThread) socketThread;
             if (!client.isAuthorized()) continue;
             if (client.getNickname().equals(nickname))
                 return client;

@@ -1,4 +1,4 @@
-package ru.gb.jt.chat.server.core;
+package ru.abondarenko.chat.server.core;
 
 import java.sql.*;
 
@@ -26,7 +26,7 @@ public class SqlClient {
     }
 
     synchronized String getNickname(String login, String password) {
-        String query = String.format("select nickname from users where login='%s' and password='%s'", login, password);
+        String query = String.format("SELECT nickname FROM users WHERE login='%s' AND password='%s'", login, password);
         try (ResultSet set = statement.executeQuery(query)) {
             if (set.next())
                 return set.getString(1);

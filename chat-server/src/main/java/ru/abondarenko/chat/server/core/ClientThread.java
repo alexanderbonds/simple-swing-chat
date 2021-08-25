@@ -1,8 +1,8 @@
-package ru.gb.jt.chat.server.core;
+package ru.abondarenko.chat.server.core;
 
-import ru.gb.jt.chat.common.Library;
-import ru.gb.jt.network.SocketThread;
-import ru.gb.jt.network.SocketThreadListener;
+import ru.abondarenko.chat.common.Library;
+import ru.abondarenko.network.SocketThread;
+import ru.abondarenko.network.SocketThreadListener;
 
 import java.net.Socket;
 

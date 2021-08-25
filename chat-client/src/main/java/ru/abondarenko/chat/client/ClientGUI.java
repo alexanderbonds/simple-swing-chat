@@ -1,8 +1,8 @@
-package ru.gb.jt.chat.client;
+package ru.abondarenko.chat.client;
 
-import ru.gb.jt.chat.common.Library;
-import ru.gb.jt.network.SocketThread;
-import ru.gb.jt.network.SocketThreadListener;
+import ru.abondarenko.chat.common.Library;
+import ru.abondarenko.network.SocketThread;
+import ru.abondarenko.network.SocketThreadListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,13 +20,18 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     private static final int WIDTH = 600;
     private static final int HEIGHT = 300;
 
+    private final String INITIAL_HOST_IP = "127.0.0.1";
+    private final String INITIAL_HOST_PORT = "8189";
+    private final String INITIAL_USER_NICKNAME = "user_01";
+    private final String INITIAL_USER_PASSWORD = "123";
+
     private final JTextArea log = new JTextArea();
     private final JPanel panelTop = new JPanel(new GridLayout(2, 3));
-    private final JTextField tfIPAddress = new JTextField("127.0.0.1");
-    private final JTextField tfPort = new JTextField("8189");
+    private final JTextField tfIPAddress = new JTextField(INITIAL_HOST_IP);
+    private final JTextField tfPort = new JTextField(INITIAL_HOST_PORT);
     private final JCheckBox cbAlwaysOnTop = new JCheckBox("Always on top");
-    private final JTextField tfLogin = new JTextField("hpyshrk");
-    private final JPasswordField tfPassword = new JPasswordField("123");
+    private final JTextField tfLogin = new JTextField(INITIAL_USER_NICKNAME);
+    private final JPasswordField tfPassword = new JPasswordField(INITIAL_USER_PASSWORD);
     private final JButton btnLogin = new JButton("Login");
 
     private final JPanel panelBottom = new JPanel(new BorderLayout());
@@ -117,7 +122,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         tfMessage.setText(null);
         tfMessage.requestFocusInWindow();
         socketThread.sendMessage(Library.getTypeBcastClient(msg));
-        //wrtMsgToLogFile(msg, username);
+        wrtMsgToLogFile(msg, username);
     }
 
     private void wrtMsgToLogFile(String msg, String username) {
@@ -163,10 +168,6 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         System.exit(1);
     }
 
-    /**
-     * Socket thread listener methods
-     * */
-
     @Override
     public void onSocketStart(SocketThread thread, Socket socket) {
         putLog("Start");
@@ -197,6 +198,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
 
     @Override
     public void onSocketException(SocketThread thread, Exception exception) {
+        // Suppressed exceptions on disconnect
         // showException(thread, exception);
     }
 

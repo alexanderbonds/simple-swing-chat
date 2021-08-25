@@ -1,7 +1,7 @@
-package ru.gb.jt.chat.server.gui;
+package ru.abondarenko.chat.server.gui;
 
-import ru.gb.jt.chat.server.core.ChatServer;
-import ru.gb.jt.chat.server.core.ChatServerListener;
+import ru.abondarenko.chat.server.core.ChatServerListener;
+import ru.abondarenko.chat.server.core.ChatServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +24,7 @@ public class ServerGUI extends JFrame implements ActionListener, Thread.Uncaught
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
-            public void run() { // Event Dispatching Thread
+            public void run() {
                 new ServerGUI();
             }
         });
@@ -57,7 +57,6 @@ public class ServerGUI extends JFrame implements ActionListener, Thread.Uncaught
         if (src == btnStart) {
             chatServer.start(8189);
         } else if (src == btnStop) {
-//            throw new RuntimeException("Hello from EDT");
             chatServer.stop();
         } else {
             throw new RuntimeException("Unknown source: " + src);

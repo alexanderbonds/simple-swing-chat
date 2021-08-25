@@ -1,4 +1,4 @@
-package ru.gb.jt.network;
+package ru.abondarenko.network;
 
 import java.io.IOException;
 import java.net.ServerSocket;

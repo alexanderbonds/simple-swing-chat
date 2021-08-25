@@ -1,22 +1,12 @@
-package ru.gb.jt.chat.common;
+package ru.abondarenko.chat.common;
 
 public class Library {
-    /*
-    /auth_request±login±password
-    /auth_accept±nickname
-    /auth_error
-    /broadcast±msg
-    /msg_format_error±msg
-    /user_list±user1±user2±user3±....
-    * */
     public static final String DELIMITER = "±";
     public static final String AUTH_REQUEST = "/auth_request";
     public static final String AUTH_ACCEPT = "/auth_accept";
     public static final String AUTH_DENIED = "/auth_denied";
     public static final String MSG_FORMAT_ERROR = "/msg_format_error";
-    // если мы вдруг не поняли, что за сообщение и не смогли разобрать
     public static final String TYPE_BROADCAST = "/bcast";
-    // то есть сообщение, которое будет посылаться всем
     public static final String TYPE_BCAST_CLIENT = "/client_msg";
     public static final String USER_LIST = "/user_list";
 
